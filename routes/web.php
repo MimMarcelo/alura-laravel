@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/series', 'SeriesController@index');
+Route::get('/series/criar', 'SeriesController@create');
+Route::post('/series/criar', 'SeriesController@store');
 /*
  * Faz a associação das ações com os métodos do Controller de forma automática,
  * Mas precisa seguir as convenções listadas em:

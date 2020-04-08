@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Serie;
 /**
  *
  */
@@ -10,19 +11,22 @@ class SeriesController extends Controller
 
     function index(Request $request)
     {
-        $series = [
-            'Agents of SHIELD',
-            'Castlevania',
-            'Dark',
-            'Once upon a time'
-        ];
+        // $series = Serie::all(); // Pega todos
+        $series = Serie::query()->orderBy('nome')->get();
 
-        $html = "<ul>";
-        foreach ($series as $serie) {
-            $html .= "<li>$serie</li>";
-        }
-        $html .= "</ul>";
-        return $html;
+        return view('series.index', ['series' => $series]);
+    }
+
+    public function create()
+    {
+        return view("series.create");
+    }
+
+    public function store(Request $request)
+    {
+        $nome = $request->nome;
+        $serie = Serie::create(compact('nome'));
+        echo "Série \"{$serie->nome}\" com o ID {$serie->id} criada com sucesso!";
     }
 }
 
