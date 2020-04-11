@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\SeriesFormRequest;
 use App\Serie;
 /**
  *
@@ -24,7 +25,7 @@ class SeriesController extends Controller
         return view("series.create");
     }
 
-    public function store(Request $request)
+    public function store(SeriesFormRequest $request)
     {
         $nome = $request->nome;
         // $serie = Serie::create(compact('nome'));
