@@ -18,6 +18,7 @@ Route::get('/series', 'SeriesController@index')->name('series.index');
 Route::get('/series/criar', 'SeriesController@create')->name('series.create');
 Route::post('/series/criar', 'SeriesController@store')->name('series.store');
 Route::delete('/series/remover/{id}', 'SeriesController@destroy')->name('series.destroy');
+Route::get('/series/{serieId}/temporadas', 'TemporadasController@index')->name('temporadas.index');
 /*
  * Faz a associação das ações com os métodos do Controller de forma automática,
  * Mas precisa seguir as convenções listadas em:

@@ -28,8 +28,15 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request)
     {
         $nome = $request->nome;
-        // $serie = Serie::create(compact('nome'));
-        $serie = Serie::create($request->all());
+        $serie = Serie::create(compact('nome'));
+
+        for ($i=1; $i < $request->n_temporadas; $i++) {
+            $temporada = $serie->temporadas()->create(['numero' => $i]);
+            for ($j=1; $j < $request->n_episodios; $j++) {
+                $episodio = $temporada->episodios()->create(['numero' => $j]);
+            }
+        }
+        
         $request->session()
             // ->put( // Cria a sessão como de costume
             ->flash( // Cria a sessão que só dura uma requisição
