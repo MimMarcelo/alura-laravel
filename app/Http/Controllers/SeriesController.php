@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\SeriesFormRequest;
 use App\Serie;
+use App\Services\{CriadorDeSeries, RemovedorDeSeries};
 /**
  *
  */
@@ -25,18 +26,10 @@ class SeriesController extends Controller
         return view("series.create");
     }
 
-    public function store(SeriesFormRequest $request)
+    public function store(SeriesFormRequest $request, CriadorDeSeries $criadorDeSeries)
     {
-        $nome = $request->nome;
-        $serie = Serie::create(compact('nome'));
+        $serie = $criadorDeSeries->criarSerie($request->nome, $request->n_temporadas, $request->n_episodios);
 
-        for ($i=1; $i < $request->n_temporadas; $i++) {
-            $temporada = $serie->temporadas()->create(['numero' => $i]);
-            for ($j=1; $j < $request->n_episodios; $j++) {
-                $episodio = $temporada->episodios()->create(['numero' => $j]);
-            }
-        }
-        
         $request->session()
             // ->put( // Cria a sessão como de costume
             ->flash( // Cria a sessão que só dura uma requisição
@@ -46,10 +39,10 @@ class SeriesController extends Controller
         return redirect()->route('series.index');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, RemovedorDeSeries $removedorDeSeries)
     {
-        $serie = Serie::find($request->id);
-        Serie::destroy($request->id);
+        $serie = $removedorDeSeries->removerSerie($request->id);
+        // Serie::destroy($request->id);
         $request->session()
             ->flash(
                 "mensagem",
