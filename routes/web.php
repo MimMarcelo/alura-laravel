@@ -21,6 +21,9 @@ Route::delete('/series/remover/{id}', 'SeriesController@destroy')->name('series.
 Route::post('/series/{id}/editarNome', 'SeriesController@editarNome')->name('series.editarNome');
 
 Route::get('/series/{serieId}/temporadas', 'TemporadasController@index')->name('temporadas.index');
+
+Route::get('/temporadas/{temporada}/episodios', 'EpisodiosController@index')->name('episodios.index');
+Route::post('/temporadas/{temporada}/episodios/assistir', 'EpisodiosController@assistir')->name('episodios.assistir');
 /*
  * Faz a associação das ações com os métodos do Controller de forma automática,
  * Mas precisa seguir as convenções listadas em:
