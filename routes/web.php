@@ -11,9 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/login', 'LoginController@index')->name('login');
+Route::get('/logout', 'LoginController@logout')->name('login.logout');
+Route::post('/login', 'LoginController@logar')->name('login.index');
+
+Route::get('/registro', 'RegistroController@create')->name('registro.create');
+Route::post('/registro', 'RegistroController@store')->name('registro.store');
+
 Route::get('/series', 'SeriesController@index')->name('series.index');
 Route::get('/series/criar', 'SeriesController@create')->name('series.create');
 Route::post('/series/criar', 'SeriesController@store')->name('series.store');
